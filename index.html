@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="de-AT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Berufsorientierung für die Wiener Mittelschule. 15 Fragen, persönliche Ideen und Ausbildungswege.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Berufskompass · Berufsorientierung Wien</title>
+<style>
+:root{color-scheme:light;--ink:#182a34;--muted:#435a64;--green:#135b49;--mint:#e3f3ea;--paper:#fff;--line:#c6d6d1;--gold:#ffe5a5}
+*{box-sizing:border-box}body{margin:0;background:#f1f6f3;color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+header{background:#123e36;color:white;border-bottom:5px solid #83c4a8}header div,main,footer{max-width:54rem;margin:auto;padding:1rem clamp(1rem,4vw,2rem)}
+header strong{font-size:1.25rem}header small{display:block;color:#d3efe3}
+main{padding-block:clamp(1rem,4vw,2rem)}footer{color:var(--muted);font-size:.9rem}
+section.panel{background:var(--paper);border:1px solid var(--line);border-radius:1.25rem;padding:clamp(1rem,5vw,2rem);box-shadow:0 .35rem 1.2rem #123e3610}
+h1,h2,h3{line-height:1.2;margin:.35em 0 .55em}h1{font-size:clamp(1.6rem,5vw,2.55rem);letter-spacing:-.035em}h2{font-size:1.35rem}h3{font-size:1.1rem}
+p{margin:.5em 0 1em}.eyebrow{color:var(--green);font-weight:750}.muted{color:var(--muted)}
+progress{width:100%;height:.65rem;display:block;margin:.45rem 0 1.3rem;accent-color:var(--green);border:0;border-radius:1rem;overflow:hidden}
+progress::-webkit-progress-bar{background:#deebe5}progress::-webkit-progress-value{background:var(--green)}progress::-moz-progress-bar{background:var(--green)}
+label.option{display:flex;align-items:flex-start;gap:.8rem;border:1px solid var(--line);padding:.65rem .8rem;margin:.45rem 0;border-radius:.65rem;cursor:pointer;min-height:44px}
+label.option:has(:checked){background:var(--mint);border-color:var(--green)}input[type=checkbox]{margin:.15rem 0 0;width:1.2rem;height:1.2rem;flex:none;accent-color:var(--green)}
+textarea{width:100%;min-height:5rem;resize:vertical;font:inherit;padding:.6rem;border:1px solid #718881;border-radius:.55rem;background:white;color:inherit}textarea:disabled{background:#edf1ef}
+fieldset{min-width:0;margin:0 0 1rem;border:0;padding:0}legend{padding:0;font-weight:650}label[for=note]{display:block;font-weight:650}
+.actions{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.1rem}
+button{font:inherit;font-weight:700;border:1px solid var(--green);border-radius:.65rem;padding:.6rem 1rem;min-height:44px;background:var(--green);color:white;cursor:pointer}
+button.secondary{background:white;color:var(--green)}:focus-visible{outline:3px solid #945100;outline-offset:3px}
+a{color:#104f40;text-underline-offset:.15em}ul,ol{padding-inline-start:1.5rem}li{margin:.3rem 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.65rem}
+article,.callout{border:1px solid var(--line);border-radius:.8rem;padding:.8rem 1rem;margin:.65rem 0;overflow-wrap:anywhere}
+.callout{background:var(--mint)}.phase{display:inline-block;background:var(--gold);padding:.15rem .65rem;border-radius:1rem;font-weight:700}
+details{margin-top:1rem}summary{cursor:pointer;font-weight:700;min-height:44px;padding-block:.55rem}
+@page{margin:15mm}
+@media print{
+body,section.panel,.callout,article{background:white;color:black;box-shadow:none}
+header,footer,.actions,.screen-only{display:none!important}main,section.panel{padding:0;margin:0;max-width:none;border:none}
+.grid{display:block}article.job{break-inside:avoid}h1,h2,h3{break-after:avoid}p,li{orphans:2;widows:2}
+}
+</style>
+</head>
+<body>
+<header><div><strong>Berufskompass</strong><small>Berufsorientierung · Mittelschule Wien</small></div></header>
+<main id="app"><noscript>Bitte aktiviere JavaScript im Browser, um den Berufskompass zu starten.</noscript></main>
+<footer>Deine Antworten bleiben in diesem Tab. Beim Neuladen oder Schließen gehen sie verloren. Speichere dein Ergebnis vorher als PDF, wenn du es behalten möchtest.</footer>
+<script>
+"use strict";
+const questions = [
+["Was gelingt dir, wenn du etwas Neues ausprobierst?","Ich baue etwas nach|Ich finde heraus, warum etwas nicht funktioniert|Ich lerne einen neuen Handgriff|Ich frage nach und erkläre es anderen|Ich probiere eine neue Gestaltung","bauen technik praxis menschen gestalten"],
+["Was klappt bei dir in einer Gruppe gut?","Ich höre anderen zu|Ich teile Aufgaben ein|Ich helfe beim Aufbauen|Ich erkläre eine Anleitung|Ich behalte die Zeit im Blick","menschen plan bauen menschen plan"],
+["Was kannst du bei praktischen Aufgaben gut?","Ich messe genau ab|Ich repariere Kleinigkeiten|Ich arbeite sauber mit Werkzeug|Ich richte Essen schön an|Ich sortiere Material","plan technik bauen gestalten plan"],
+["Was machst du, wenn etwas schiefläuft?","Ich suche Schritt für Schritt den Fehler|Ich bitte rechtzeitig um Hilfe|Ich probiere eine andere Lösung|Ich bleibe ruhig, wenn jemand verärgert ist|Ich mache einen neuen Plan","technik menschen praxis menschen plan"],
+["Wofür bekommst du manchmal Lob?","Ich halte Abmachungen ein|Ich arbeite ordentlich|Ich habe gute Ideen für Farben oder Formen|Ich helfe anderen geduldig|Ich kann gut mit den Händen arbeiten","plan plan gestalten menschen bauen"],
+["Was fällt dir bei längeren Aufgaben schwer?","Ich verliere leicht den Überblick|Ich lasse mich schnell ablenken|Ich vergesse einzelne Schritte|Ich brauche Pausen bei Wiederholungen|Ich fange oft spät an","plan plan plan praxis plan"],
+["Was kostet dich in Gruppen Überwindung?","Vor einer Gruppe reden|Unbekannte Personen ansprechen|Um Hilfe bitten|Bei Streit ruhig bleiben|Meine Meinung sagen","menschen menschen menschen menschen menschen"],
+["Wobei brauchst du bei praktischen Aufgaben Unterstützung?","Genau messen|Werkzeug sicher halten|Fehler an Geräten finden|Etwas gleichmäßig schneiden|Nach einer Skizze arbeiten","plan bauen technik praxis gestalten"],
+["Was ist für dich unter Zeitdruck schwierig?","Rechtzeitig anfangen|Wichtiges zuerst erledigen|Sauber und genau bleiben|Auf mehrere Dinge gleichzeitig achten|Im Team klar sagen, was noch fehlt","plan plan praxis plan menschen"],
+["Was möchtest du noch üben?","Eine technische Anleitung verstehen|Eine Idee zeichnen|Eine Aufgabe im Team besprechen|Meine Arbeit am Ende überprüfen|Einen neuen Handgriff wiederholen","technik gestalten menschen plan praxis"],
+["Was würdest du an einem Schnuppertag gern tun?","Ein Fahrrad reparieren|Eine Schaltung ausprobieren|Ein Möbelstück bauen|Ein Gericht zubereiten|Eine Maschine testen","rad strom holz küche maschine"],
+["Was interessiert dich im Alltag?","Wie ein E-Bike funktioniert|Wie Strom ins Haus kommt|Wie Möbel entworfen werden|Wie ein Küchenteam arbeitet|Wie Roboter Bewegungen lernen","rad strom holz küche maschine"],
+["Welche Aufgabe würdest du für ein Schulfest wählen?","Fahrräder für einen Parcours prüfen|Beleuchtung mit einer Fachperson vorbereiten|Einen Holzstand bauen|Essen vorbereiten und anrichten|Eine bewegliche Ausstellung bauen","rad strom holz küche maschine"],
+["Was würdest du gern besser können?","Bremsen richtig einstellen|Mit Messgeräten elektrische Fehler finden|Holz zuschneiden und verbinden|Ein Menü planen und kochen|Sensoren einstellen und testen","rad strom holz küche maschine"],
+["Welchen Arbeitsplatz würdest du gern kennenlernen?","Eine Fahrradwerkstatt|Einen Betrieb für Elektroinstallation|Eine Tischlerei|Eine Restaurantküche|Eine Werkstatt für Maschinen und Anlagen","rad strom holz küche maschine"]
+].map(([title, labels, tags]) => ({
+  title, labels: labels.split("|"), tags: tags.split(" ")
+}));
+const phases = ["Stärken", "Schwächen und Lernfelder", "Interessen"];
+const jobs = [
+  {key:"rad", name:"Fahrradmechatroniker:in", tags:["technik","bauen","menschen"], work:"Du prüfst und reparierst Fahrräder und E-Bikes und erklärst Kund:innen, was gemacht wurde.", human:"Eine Reparatur am echten Rad und die abschließende Sicherheitsprüfung brauchen Arbeit direkt am Fahrrad.", path:"Lehre Fahrradmechatronik."},
+  {key:"strom", name:"Elektrotechniker:in", tags:["technik","plan","bauen"], work:"Du installierst elektrische Anlagen, misst nach und suchst Fehler.", human:"Jedes Gebäude hat andere Bedingungen. Messen, Montieren und Sicherheitsprüfungen finden vor Ort statt.", path:"Lehre Elektrotechnik, zum Beispiel mit Hauptmodul Elektro- und Gebäudetechnik. Schulische Wege ins Berufsfeld sind eine Fachschule (BMS) oder HTL (BHS) für Elektrotechnik."},
+  {key:"holz", name:"Tischler:in", tags:["bauen","gestalten","plan"], work:"Du planst, fertigst und montierst Möbel oder andere Teile aus Holz.", human:"Individuelle Maße, die Arbeit mit dem Material und die Montage in echten Räumen brauchen handwerkliches Können.", path:"Lehre Tischlerei. Für das verwandte Berufsfeld kommen auch eine Fachschule (BMS) oder HTL (BHS) im Bereich Holztechnik infrage."},
+  {key:"küche", name:"Koch/Köchin", tags:["praxis","gestalten","menschen","plan"], work:"Du bereitest Speisen zu, stimmst dich mit dem Team ab und achtest auf Hygiene.", human:"Abschmecken, sicheres Arbeiten mit Lebensmitteln und die Abstimmung in einer vollen Küche brauchen Menschen vor Ort.", path:"Lehre Koch/Köchin. Schulische Wege ins Berufsfeld bieten zum Beispiel Hotelfachschule (BMS) oder Höhere Lehranstalt für Tourismus (BHS)."},
+  {key:"maschine", name:"Mechatroniker:in", tags:["technik","praxis","plan"], work:"Du baust mechanische und elektronische Teile zusammen und prüfst Anlagen und Sensoren.", human:"Fehler an einer laufenden Anlage zu finden und eine Reparatur sicher auszuführen erfordert praktische Arbeit und Verantwortung.", path:"Lehre Mechatronik, zum Beispiel mit Hauptmodul Automatisierungstechnik. Schulische Wege ins Berufsfeld sind eine Fachschule (BMS) oder HTL (BHS) im Bereich Mechatronik."}
+];
+const skills = {technik:"Fehler systematisch finden",bauen:"mit Werkzeug und Material arbeiten",menschen:"im Team arbeiten und erklären",plan:"Aufgaben planen und genau arbeiten",praxis:"praktische Abläufe lernen",gestalten:"Ideen gestalten"};
+const learning = {technik:"technische Anleitungen Schritt für Schritt lesen",bauen:"den sicheren Umgang mit Werkzeug üben",menschen:"Fragen und Rückmeldungen im Team üben",plan:"Aufgaben mit einer kurzen Checkliste planen",praxis:"neue Handgriffe in Ruhe üben",gestalten:"Ideen mit einer Skizze festhalten"};
+const strengthSentences = {
+  technik:"Bei praktischen Aufgaben suche ich Schritt für Schritt nach Lösungen.",
+  bauen:"Ich arbeite gerne praktisch mit Werkzeug und Material.",
+  menschen:"Ich arbeite gerne mit anderen zusammen und unterstütze mein Team.",
+  plan:"Ich arbeite sorgfältig und behalte meine Aufgaben im Blick.",
+  praxis:"Ich probiere neue Handgriffe aus und lerne gerne durch praktische Aufgaben.",
+  gestalten:"Ich bringe gerne eigene Ideen ein und setze sie praktisch um."
+};
+const blank = () => questions.map(() => ({selected:[], note:"", unsure:false}));
+let answers = blank();
+let step = -1;
+const app = document.querySelector("#app");
+const escapeHTML = value => value.replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+const button = (id, label, secondary = false) => '<button type="button" id="' + id + '"' + (secondary ? ' class="secondary"' : '') + '>' + label + '</button>';
+function counts(start, end) {
+  const result = {};
+  for (let i = start; i < end; i++) {
+    if (answers[i].unsure) continue;
+    const tags = new Set(answers[i].selected.map(index => questions[i].tags[index]));
+    tags.forEach(tag => { result[tag] = (result[tag] || 0) + 1; });
+  }
+  return result;
+}
+function rank() {
+  const strengths = counts(0, 5);
+  const interests = counts(10, 15);
+  return jobs.map(job => {
+    const related = job.tags.filter(tag => strengths[tag]);
+    const interest = interests[job.key] || 0;
+    const score = interest * 4 + related.reduce((sum, tag) => sum + strengths[tag], 0);
+    return {...job, related, interest, score};
+  }).filter(job => job.score > 0)
+    .sort((a, b) => b.score - a.score || b.interest - a.interest || a.name.localeCompare(b.name, "de-AT"))
+    .slice(0, 5);
+}
+function list(items) {
+  return "<ul>" + items.map(item => "<li>" + escapeHTML(item) + "</li>").join("") + "</ul>";
+}
+function summary(start) {
+  const items = [];
+  let unsure = 0;
+  let skipped = 0;
+  for (let i = start; i < start + 5; i++) {
+    const answer = answers[i];
+    if (answer.unsure) { unsure++; continue; }
+    if (!answer.selected.length && !answer.note.trim()) skipped++;
+    answer.selected.forEach(index => items.push(questions[i].labels[index]));
+    if (answer.note.trim()) items.push("Eigene Antwort – " + answer.note.trim());
+  }
+  return (items.length ? list([...new Set(items)]) : "<p>Hier hast du keine konkreten Antworten eingetragen.</p>") +
+    (unsure ? '<p class="muted">Noch unsicher bei ' + unsure + ' von 5 Fragen.</p>' : "") +
+    (skipped ? '<p class="muted">Übersprungen: ' + skipped + ' von 5 Fragen.</p>' : "");
+}
+function topTag(values) {
+  return Object.keys(values).sort((a, b) => values[b] - values[a])[0];
+}
+function application(matches) {
+  const strength = topTag(counts(0,5));
+  const practice = topTag(counts(5,10));
+  const job = matches.find(match => match.interest);
+  return [
+    job ? "Ich möchte das Berufsfeld " + ({rad:"Fahrradmechatronik",strom:"Elektrotechnik",holz:"Tischlerei",küche:"Küche und Gastronomie",maschine:"Mechatronik"}[job.key]) + " bei einem Schnuppertag in Ihrem Betrieb kennenlernen."
+        : "Ich möchte bei einem Schnuppertag in Ihrem Betrieb mehr über die Aufgaben und die Ausbildung erfahren.",
+    strength ? strengthSentences[strength] : "Bei einem Schnuppertag würde ich gerne eine kleine Aufgabe ausprobieren.",
+    practice ? "Ich möchte im Betrieb " + learning[practice] + "."
+        : "Ich freue mich darauf, Neues zu lernen und Ihr Team bei einfachen Aufgaben zu unterstützen."
+  ];
+}
+function results() {
+  const matches = rank();
+  const challenge = counts(5,10);
+  return '<section class="panel"><p class="eyebrow">15 Fragen · Dein Ergebnis</p><h1>Dein Berufskompass</h1>' +
+    '<p>Deine Antworten zeigen, was du ausprobieren könntest. Das Ergebnis ist eine Orientierung. Wie sich Berufe und Lehrstellen entwickeln, bleibt offen.</p>' +
+    '<h2>Deine Antworten auf einen Blick</h2><div class="grid">' +
+    phases.map((phase, i) => '<article><h3>' + phase + '</h3>' + summary(i * 5) + '</article>').join("") +
+    '</div><h2>Berufe zum Kennenlernen</h2>' +
+    (matches.length ? '<p>Die Vorschläge enthalten Aufgaben, die praktisches Können und Verantwortung brauchen. KI kann bei Planung und Fehlersuche unterstützen.</p>' : '<p>Für einen Berufsvorschlag braucht es mindestens eine passende Auswahl bei Stärken oder Interessen. Du kannst deine Antworten ergänzen oder mit deiner Lehrperson über deine eigenen Ideen sprechen.</p>') +
+    matches.map(job => {
+      const interestExample = questions.slice(10).flatMap((question, offset) =>
+        (answers[offset + 10].unsure ? [] : answers[offset + 10].selected).filter(index => question.tags[index] === job.key).map(index => question.labels[index])
+      )[0];
+      const practice = job.tags.filter(tag => challenge[tag]).sort((a,b) => challenge[b] - challenge[a])[0];
+      return '<article class="job"><h3>' + job.name + '</h3><p>' + job.work + '</p><p><strong>Das passt zu deinen Antworten.</strong> ' +
+        (interestExample ? 'Du hast dieses Beispiel gewählt: „' + escapeHTML(interestExample) + '“. ' : '') +
+        (job.related.length ? 'Dazu passen deine Stärken: ' + job.related.map(tag => skills[tag]).join(', ') + '. ' : '') +
+        '</p><p><strong>Was Menschen dabei übernehmen.</strong> ' + job.human + '</p>' +
+        (practice ? '<p><strong>Das kannst du üben.</strong> Du könntest beim Schnuppern ' + learning[practice] + '.</p>' : '') +
+        '<p><strong>Ausbildung in Österreich.</strong> ' + job.path + '</p></article>';
+    }).join("") +
+    '<div class="callout"><h2>Wie geht es nach der Mittelschule weiter?</h2><p>Im 9. Schuljahr kannst du zum Beispiel eine Polytechnische Schule (PTS), eine berufsbildende mittlere Schule (BMS) oder eine berufsbildende höhere Schule (BHS) besuchen. Eine BHS führt zur Matura und zu einem Berufsabschluss. Nach der neunjährigen Schulpflicht kannst du mit einer Lehre im Betrieb und in der Berufsschule starten.</p><p>Für Wien kannst du mit deiner Lehrperson einen Schnuppertag, einen Tag der offenen Tür oder eine Beratung beim AMS-BerufsInfoZentrum (BIZ) besprechen. Frag bei der Schule nach den Aufnahmebedingungen.</p></div>' +
+    '<h2>Drei Sätze für deine Bewerbung</h2><p>Wähle passende Sätze aus und ergänze ein echtes Beispiel von dir.</p><ol>' +
+    application(matches).map(sentence => '<li>' + escapeHTML(sentence) + '</li>').join("") + '</ol>' +
+    '<details class="screen-only"><summary>So entsteht deine Auswertung</summary><p>Jedes passende Interesse zählt vier Punkte pro Frage. Jede passende Stärke zählt einen Punkt pro Bereich und Frage. Bei Gleichstand zählt zuerst die Zahl der passenden Interessen, danach das Alphabet. Lernfelder geben Übungsideen. Freitext erscheint in deiner Zusammenfassung.</p><p><a href="https://www.wko.at/lehre/lehrberufe">WKO – Lehrberufe</a> · <a href="https://eausweise.oesterreich.gv.at/de/themen/bildung_und_ausbildung/schulen/Seite.110002">Österreich.gv.at – Schulpflicht</a> · <a href="https://www.ams.at/arbeitsuchende/aus-und-weiterbildung/berufsinformationen/biz---berufsinfozentren">AMS – BerufsInfoZentren</a></p></details>' +
+    '<div class="actions">' + button("print", "Drucken / als PDF speichern") + button("back", "Antworten ändern", true) + button("reset", "Neu beginnen", true) + '</div>' +
+    '<p class="muted screen-only">Wähle im Druckdialog „Als PDF speichern“, falls dein Gerät diese Option anbietet.</p></section>';
+}
+function render(focus = true) {
+  if (step < 0) {
+    app.innerHTML = '<section class="panel"><p class="eyebrow">Dein nächster Schritt</p><h1>Was passt zu dir?</h1><p>Entdecke, was dir leichtfällt, was du noch üben möchtest und welche Berufe dich interessieren.</p><div class="callout"><strong>15 Fragen in 3 Teilen</strong><p>Wähle Beispiele aus oder schreibe etwas Eigenes. Du kannst Fragen überspringen und Antworten ändern.</p></div><p class="muted">Schreib keine Namen oder Kontaktdaten in die Felder. Wenn du fertig bist, kannst du dein Ergebnis auf deinem Gerät als PDF speichern.</p><div class="actions">' + button("next","Fragebogen starten") + '</div></section>';
+  } else if (step === questions.length) {
+    app.innerHTML = results();
+    app.querySelector("#print").onclick = () => window.print();
+    app.querySelector("#reset").onclick = () => {
+      if (window.confirm("Deine bisherigen Antworten löschen und neu beginnen?")) {
+        answers = blank();
+        step = -1;
+        render();
+      }
+    };
+  } else {
+    const question = questions[step];
+    const answer = answers[step];
+    const phase = phases[Math.floor(step / 5)];
+    app.innerHTML = '<section class="panel"><span class="phase">' + phase + '</span><p id="position" class="eyebrow">Frage ' + (step + 1) + ' von 15</p>' +
+      '<progress aria-labelledby="position" max="15" value="' + (step + 1) + '"></progress><h1 aria-describedby="position">' + question.title + '</h1>' +
+      '<fieldset><legend>Du kannst mehrere Beispiele wählen.</legend>' +
+      question.labels.map((label, index) => '<label class="option"><input type="checkbox" data-choice="' + index + '"' + (answer.selected.includes(index) ? ' checked' : '') + '><span>' + label + '</span></label>').join("") +
+      '<label class="option"><input type="checkbox" id="unsure"' + (answer.unsure ? ' checked' : '') + '><span>Ich weiß es nicht</span></label></fieldset>' +
+      '<label for="note">Deine eigene Antwort (freiwillig)</label><textarea id="note" maxlength="300" aria-describedby="hint"></textarea><small id="hint" class="muted">Bis zu 300 Zeichen. Du kannst das Feld auch leer lassen.</small>' +
+      '<div class="actions">' + button("back", "Zurück", true) + button("next", step === 14 ? "Auswertung ansehen" : "Weiter") + '</div></section>';
+    const note = app.querySelector("#note");
+    const unsure = app.querySelector("#unsure");
+    const options = [...app.querySelectorAll("[data-choice]")];
+    note.value = answer.note;
+    const sync = () => {
+      options.forEach(option => { option.disabled = answer.unsure; });
+      note.disabled = answer.unsure;
+    };
+    unsure.onchange = () => { answer.unsure = unsure.checked; sync(); };
+    note.oninput = () => { answer.note = note.value; };
+    options.forEach(option => {
+      option.onchange = () => {
+        answer.selected = options.filter(input => input.checked).map(input => Number(input.dataset.choice));
+      };
+    });
+    sync();
+  }
+  const next = app.querySelector("#next");
+  const back = app.querySelector("#back");
+  if (next) next.onclick = () => { step++; render(); };
+  if (back) back.onclick = () => { step--; render(); };
+  if (focus) {
+    const heading = app.querySelector("h1");
+    heading.tabIndex = -1;
+    heading.focus({preventScroll:true});
+    window.scrollTo(0,0);
+  }
+}
+render(false);
+</script>
+</body>
+</html>
+
+
